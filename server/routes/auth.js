@@ -33,7 +33,7 @@ router.post("/login", async (req, res) => {
   const validPass = await bcrypt.compare(req.body.password, user.password)
   if (!validPass) return res.status(400).send({ error: "Invalid password" })
 
-  const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET)
+  const token = jwt.sign({ _id: user._id }, "yourSecretKey")
   res.send({ user, token: `Bearer ${token}` })
 })
 

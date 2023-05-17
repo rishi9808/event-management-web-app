@@ -43,8 +43,19 @@ app.use("/api/event", eventRoute)
 
 const main = async () => {
   // Connect to db
-  await mongoose.connect(process.env.MONGODB_URL)
-  console.log("Connected to db")
+  var mongoURL = "mongodb+srv://rishi:7994887566@cluster0.49jltqb.mongodb.net/Clubify"
+
+  mongoose.connect(mongoURL, { useNewUrlParser: true, useUnifiedTopology: true })
+
+  var db = mongoose.connection
+
+  db.on("connected", () => {
+    console.log("MongoDB connected successfully 🎉")
+  })
+
+  db.on("error", () => {
+    console.log("MongoDB connection failed ☠️")
+  })
   // Start the server
   app.listen(PORT, () => console.log(`Server running at localhost:${PORT}`))
 }
